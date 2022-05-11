@@ -1,0 +1,47 @@
+{% extends 'facultyHeader.html' %}
+<!-- {% load static %} -->
+{% block content %}
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <title>VictoryPro | Faculty</title>
+
+</head>
+
+<body>
+  <div class="main">
+    <div class="content_resize">
+      {%if msg%}
+      <h3>{{msg}}</h3>
+      {%endif%}
+    <form action="{% url 'addExam' %}" method="post" >
+      {% csrf_token %}
+      <ol>
+          <input type="hidden" name="courseId" value="{{course}}">
+          <li>
+              <label for="ename">Exam Name (required)</label>
+              <input type="text" name="ename"  />
+          </li>
+          <li>
+              <label for="etime">Exam Time</label>
+              <input type="number"  name="etime" />
+          </li>
+          <li>
+            <label for="emarks">Exam Time</label>
+            <input type="number"  name="emarks" />
+        </li>
+          <li>
+              <input type="submit" name="imageField" id="imageField"
+                  src="{% static 'images/submit.gif' %}" class="send" />
+              <div class="clr"></div>
+          </li>
+      </ol>
+  </form>
+</div>
+  </div>
+</body>
+</html>
+{% endblock %}

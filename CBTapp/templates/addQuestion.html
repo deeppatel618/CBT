@@ -1,0 +1,109 @@
+{% extends 'facultyHeader.html' %}
+<!-- {% load static %} -->
+{% block content %}
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <title>VictoryPro | Faculty</title>
+
+</head>
+
+<body>
+  <div class="main">
+    <div class="content_resize">
+      {%if msg%}
+      <h3>{{msg}}</h3>
+      {%endif%}
+      <!-- <h4>{{allQuestion}}</h4> -->
+      <table width="50%" border="5" cellpadding="5px" cellspacing="5px" style="color: white;">
+        <tr>
+          <th>Added Question</th>
+        </tr>
+        {%if allQuestion %}
+        {%for x in allQuestion%}
+        <tr>
+          <td>{{x.ques}}</td>
+        </tr>
+        {%endfor%}
+        {% endif %}
+      </table>
+      <form action="{% url 'addQuestion' %}" method="post" id="questionForm" onsubmit="checking(this)">
+        {% csrf_token %}
+        <table>
+          <tr>
+            <td colspan="2">
+              <input type="hidden" name="cname" value="{{cname}}">
+              <input type="hidden" name="ename" value="{{ename}}">
+              <label for="ques">Question(required)</label>
+              <input type="text" name="ques" id="ques" />
+            </td>
+          </tr>
+          <tr>
+            <td>
+
+              <label for="opt">option1(required)</label>
+              <input type="text" name="opt1" id="opt1" />
+            </td>
+            <td><input type="radio" name="ans" value="opt1"></td>
+          </tr>
+          <tr>
+            <td><label for="opt">option2(required)</label>
+              <input type="text" name="opt2" id="opt2" />
+            </td>
+            <td><input type="radio" name="ans" value="opt2"></td>
+          </tr>
+          <tr>
+            <td><label for="opt">option3(required)</label>
+              <input type="text" name="opt3" id="opt3" />
+            </td>
+            <td><input type="radio" name="ans" value="opt3"></td>
+          </tr>
+          <tr>
+            <td><label for="opt">option4(required)</label>
+              <input type="text" name="opt4" id="opt4" />
+            </td>
+            <td><input type="radio" name="ans" value="opt4"></td>
+          </tr>
+          <tr>
+            <td> <input type="submit" name="imageField" id="imageField" src="{% static 'images/submit.gif' %}"
+                class="send" /></td>
+          </tr>
+        </table>
+
+      </form>
+    </div>
+  </div>
+  <script>
+    function checking(a) {
+      flag = false
+      ques = document.getElementById("ques").value
+      opt1 = document.getElementById("opt1").value
+      opt2 = document.getElementById("opt2").value
+      opt3 = document.getElementById("opt3").value
+      opt4 = document.getElementById("opt4").value
+      ans = document.getElementsByName("ans")
+      if (ques == "" || opt1 == "" || opt2 == "" || opt3 == "" || opt4 == "") {
+        alert("All fields are complusory");
+        event.preventDefault();
+        return
+      }
+      ans.forEach(element => {
+        if (element.checked) {
+          flag = true
+        }
+
+      });
+      if (!flag) {
+        alert("Select any one answer")
+        event.preventDefault();
+      }
+      
+    }
+  </script>
+</body>
+
+</html>
+{% endblock %}
