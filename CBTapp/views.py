@@ -11,6 +11,7 @@ from django.core.mail import send_mail
 
 import os
 
+from django.http import JsonResponse
 
 
 def index(request):
@@ -44,6 +45,17 @@ def signUp(request):
     else:
         return render(request,'signUp.html')
 
+def studentStatus(request):
+    userId = request.GET.get('id', None)
+    user = User.objects.get(id = userId)
+    print(user)
+    if user.status == "approved":
+        user.status = "pending"
+    else:
+        user.status = "approved"
+    user.save()
+    data = { 'status' : 'Status Updated' }
+    return JsonResponse(data)
 
 def login(request):
     if request.method=="POST":

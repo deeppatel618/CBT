@@ -19,4 +19,5 @@ urlpatterns = [
     path('Question/',views.addQuestion,name='addQuestion'),
     path('examDetails/',views.examDetails,name='examDetails'),
     path('examination/',views.examination,name='examination'),
+    path('ajax/studentStatus/',views.studentStatus,name='studentStatus'),
 ]

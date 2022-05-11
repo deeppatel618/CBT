@@ -26,9 +26,7 @@
                         <h3>{{msg}}</h3>
                         {% endif %}
                         <div class="clr"></div>
-                        <form action="{% url 'facultyChangePassword' %}" method="post" id="sendemail">
-                            {% csrf_token %}
-                            <table width="100%" border="5" cellpadding="10px" cellspacing="10px" style="color: white;">
+                            <table width="100%" border="5" cellpadding="10px" cellspacing="10px" style="color: white;" id="studentTable">
                                 <tr>
                                     <th>Id</th>
                                     <th>Fisrt Name</qth>
@@ -45,15 +43,14 @@
                                     <td>{{i.email}}</td>
                                     <td>{{i.status}}</td>
                                     {% if i.status == "pending" %}
-                                    <td>Approve</td>
+                                    <td><button type="button" id="{{i.id}}">Approve</button></td>
                                     {% else %}
-                                    <td>Deny</td>
+                                    <td><button type="button" id="{{i.id}}">Move to pending</button></td>
                                     {% endif %}
                                 </tr>
 
                                 {% endfor%}
                             </table>
-                        </form>
                     </div>
                 </div>
                 <div class="sidebar">
@@ -104,6 +101,23 @@
         </div>
 
     </div>
+    <script>
+        $("button").click( function() {
+          var id = $(this).attr("id");
+          alert("pressed");
+          $.ajax({
+            url: '/ajax/studentStatus',
+            data: {
+              'id': id
+            },
+            dataType: 'json',
+            success: function(data) {
+              $("#studentTable").load(" #studentTable > *");
+              
+            }
+          });
+        });
+      </script>
 </body>
 
 </html>
